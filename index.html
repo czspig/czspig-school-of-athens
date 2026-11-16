@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 雅典学院</title>
+<meta name="description" content="照拉斐尔《雅典学院》重画的人工智能七十年：两种手势，三十九位人物，一位还没画完的画家。">
+<meta property="og:title" content="AI 雅典学院">
+<meta property="og:description" content="两种手势，争论了七十年。">
+<meta property="og:image" content="assets/cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="viewport">
+  <div class="layer" id="layer">
+    <img id="painting" src="assets/athens-preview.webp" alt="AI 雅典学院：照拉斐尔《雅典学院》构图绘制的 AI 史人物群像" draggable="false">
+    <svg id="overlay" viewBox="0 0 1536 1024" aria-hidden="true">
+      <defs>
+        <radialGradient id="hole"><stop offset="0.55" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+        <mask id="tlmask" maskUnits="userSpaceOnUse" x="0" y="0" width="1536" height="1024">
+          <rect width="1536" height="1024" fill="#fff"/>
+          <g id="holes"></g>
+        </mask>
+      </defs>
+      <rect id="dim" width="1536" height="1024" mask="url(#tlmask)"/>
+      <g id="links"></g>
+      <g id="spots"></g>
+    </svg>
+  </div>
+  <div id="compare" hidden>
+    <div class="layer" id="layer2"><img id="raphael" alt="拉斐尔《雅典学院》原作" draggable="false"></div>
+    <span class="tag tag-l">拉斐尔 · 1511</span>
+  </div>
+  <div id="divider" hidden><span class="grip">⟷</span></div>
+  <span class="tag tag-r" id="tagAI" hidden>AI · 2026</span>
+</div>
+
+<header class="brand">
+  <h1>AI 雅典学院</h1>
+  <p>The School of Athens · MMXXVI</p>
+</header>
+
+<div class="zoom">
+  <button id="zin" aria-label="放大">＋</button>
+  <button id="zout" aria-label="缩小">－</button>
+  <button id="zfit" aria-label="复位">⤢</button>
+  <button id="labels" aria-label="显示全部标注" title="显示全部标注">◎</button>
+</div>
+
+<nav class="modes" id="modes">
+  <button data-mode="explore" class="on">探索</button>
+  <button data-mode="links">关系</button>
+  <button data-mode="timeline">时间轴</button>
+  <button data-mode="compare">对照原作</button>
+  <button data-panel="index">名录</button>
+  <button data-panel="about">关于</button>
+</nav>
+
+<div id="timeline" hidden>
+  <button id="play" aria-label="播放">▶</button>
+  <div class="tl-main">
+    <div class="tl-head"><span id="tlYear"></span><span id="tlText"></span></div>
+    <input type="range" id="tlRange" min="0" value="0" aria-label="年份">
+  </div>
+</div>
+
+<div id="tip" hidden></div>
+<div id="caption"></div>
+
+<aside id="card" hidden>
+  <button class="x" id="cardClose" aria-label="关闭">×</button>
+  <div id="cardBody"></div>
+  <div class="card-nav"><button id="prev">‹ 上一位</button><button id="next">下一位 ›</button></div>
+</aside>
+
+<section class="panel" id="index" hidden>
+  <button class="x" data-close aria-label="关闭">×</button>
+  <h2>名录</h2>
+  <div id="indexBody"></div>
+</section>
+
+<section class="panel" id="about" hidden>
+  <button class="x" data-close aria-label="关闭">×</button>
+  <h2>关于这幅画</h2>
+  <p>拉斐尔在梵蒂冈签字厅画下《雅典学院》（1509–1511），让古希腊各个学派站在同一座殿堂里。正中两人的手势是全画的轴心：柏拉图指天，亚里士多德按地。</p>
+  <p>这幅画保留了原作的构图，把人物换成人工智能七十年里的人。中央两人仍是那两种手势，只是争论换了题目——最早是符号与连接之争，如今是同一阵营里关于风险与路线的分歧：指天的辛顿警惕可能超越人类的智能，按地的杨立昆坚持智能要从物理世界中学会。</p>
+  <p>画面左侧是起源与提问，中央是当下的分歧，右侧是建造者与产业。最远的拱门还搭着脚手架。右下角原本是拉斐尔的自画像——这幅画由 AI 画成，那个位置就留给了它，一位还没画完自己的画家；它身旁站着另一位作者。</p>
+  <p class="fine">人物的位置与动作是艺术再创作，依据公开资料，不代表本人立场或评价。</p>
+  <h3>制作</h3>
+  <p>构思、文字与代码：Claude<br>画面：ChatGPT<br>原作：拉斐尔《雅典学院》，公有领域，图源维基共享资源</p>
+</section>
+
+<div id="lightbox" hidden><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
+
+<div id="intro">
+  <div class="intro-bg"></div>
+  <div class="intro-text">
+    <p class="kicker">Raffaello · 1511 ／ 2026</p>
+    <h2>AI 雅典学院</h2>
+    <p>拉斐尔画了五十八位哲人。<br>这一次，殿堂里站着人工智能的七十年。</p>
+    <button id="enter">走进学院</button>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="assets/manifest.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

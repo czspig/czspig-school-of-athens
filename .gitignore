@@ -1,0 +1,4 @@
+# ChatGPT 原图、参考照片（含证件照）只留本地
+source/
+.claude/
+__pycache__/
