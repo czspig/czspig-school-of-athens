@@ -143,7 +143,7 @@
   function hideTip() { tip.hidden = true; }
 
   for (const f of [...FIG, ...PLACES]) {
-    const isPlace = !!byId[f.id].text;
+    const isPlace = !f.keys;
     const g = svg("g", { class: "spot" + (isPlace ? " place" : ""), "data-id": f.id });
     const ringR = isPlace ? f.r : f.r * 1.25;
     g.append(svg("circle", { class: "hit", cx: f.x, cy: f.y, r: isPlace ? f.r : f.r * 1.7 }));
@@ -211,9 +211,11 @@
     for (const g of Object.values(spotEls)) g.classList.remove("on", "lit");
     spotEls[id]?.classList.add("on");
     body.innerHTML = "";
-    if (f.text) {
+    const label = (f) => `<div class="lab">原作 · 拉斐尔，1511</div>${f.slot ? `<div class="slotname">${f.slot}</div>` : ""}<p class="why">${f.about}</p>
+        <div class="lab now">今作 · 二〇二六</div><p class="why">${f.meaning}</p>`;
+    if (!f.keys) {
       body.innerHTML = `<div class="who"><h2>${f.zh}</h2><div class="en">${f.en}</div></div>
-        <p class="why" style="margin-top:18px">${f.text}</p>
+        <div class="label">${label(f)}</div>
         ${f.link ? `<a class="go" href="${f.link}" target="_blank" rel="noopener">穿过拱门 · 时间胶囊 →</a>` : ""}`;
     } else {
       const rel = LINKS.filter(([a, b]) => a === id || b === id).map(([a, b, l]) => [a === id ? b : a, l]);
@@ -221,8 +223,7 @@
       body.append(faceCanvas(f));
       body.insertAdjacentHTML("beforeend", `
         <div class="who"><h2>${f.zh}</h2><div class="en">${f.en}</div>${f.years ? `<div class="yrs">${f.years}</div>` : ""}</div>
-        <div class="slot">站在 <b>${f.slot}</b> 的位置<span>${f.slotNote}</span></div>
-        <p class="why">${f.why}</p>
+        <div class="label">${label(f)}</div>
         <ul class="keys">${f.keys.map(([y, t]) => `<li><b>${y < 1000 ? "约 " + y : y}</b><span>${t}</span></li>`).join("")}</ul>
         ${f.transformer ? `<div class="sub">TRANSFORMER 八位作者</div><p class="note">${window.TRANSFORMER_AUTHORS}。画中出场三位，已一起亮起。</p>` : ""}
         ${rel.length ? `<div class="sub">画中的关系</div><div class="chips">${rel.map(([o, l]) => `<button class="chip" data-go="${o}">${byId[o].zh} <small>· ${l}</small></button>`).join("")}</div>` : ""}
@@ -233,7 +234,7 @@
     body.scrollTop = 0;
     highlightLinks(id);
     hideTip();
-    const s = Math.max(cam.s, fitScale() * (f.text ? 2 : 3.2));
+    const s = Math.max(cam.s, fitScale() * (!f.keys ? 2 : 3.2));
     flyTo(f.x, f.y, Math.min(s, maxS()), 900);
   }
   function close() {

@@ -5,6 +5,7 @@
   --muted: #b7a98e;
   --gold: #d6b26a;
   --gold-soft: rgba(214, 178, 106, 0.35);
+  --cold: #9fd3dc;
   --line: rgba(239, 230, 211, 0.14);
   --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
   --latin: "Cormorant Garamond", Georgia, serif;
@@ -90,9 +91,11 @@ body.show-labels #labels { color: var(--gold); border-color: var(--gold); }
 .who h2 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: .06em; }
 .who .en { font-family: var(--latin); font-style: italic; color: var(--muted); font-size: 18px; }
 .who .yrs { font-size: 13px; color: var(--muted); margin-top: 2px; }
-.slot { margin: 18px 0 14px; padding: 10px 12px; border-left: 2px solid var(--gold); background: rgba(214, 178, 106, .07); font-size: 14px; }
-.slot b { color: var(--gold); font-weight: 600; }
-.slot span { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+.label { margin: 18px 0 16px; }
+.lab { font-size: 12px; letter-spacing: .15em; color: var(--gold); margin-bottom: 4px; }
+.lab.now { color: var(--cold); margin-top: 16px; }
+.slotname { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.label .why { margin-bottom: 0; }
 .why { font-size: 15px; line-height: 1.85; margin: 0 0 14px; }
 .keys { list-style: none; margin: 0 0 14px; padding: 0; font-size: 14px; }
 .keys li { display: flex; gap: 10px; padding: 5px 0; border-top: 1px solid var(--line); }
